@@ -1,9 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { Skeleton } from '../components/ui/skeleton';
 
-// Dummy fetch function, replace with actual API call
 const fetchOrders = async () => {
-  // Example: const { data } = await axios.get('/orders');
   return [
     {
       id: '1',

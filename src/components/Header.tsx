@@ -3,8 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../features/store';
 import { logout } from '../features/user/userSlice';
+import { getAvatar } from '../utils/getAvatar';
 
-export default function Header() {
+type HeaderProps = {
+  solid?: boolean;
+};
+
+export default function Header({ solid = false }: HeaderProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [scrolled, setScrolled] = useState(false);
@@ -12,14 +17,16 @@ export default function Header() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
+    if (solid) {
+      setScrolled(true);
+      return;
+    }
+    const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [solid]);
 
-  // Close dropdown on click outside
+  // Close dropdown on click outside (mobile only)
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (!(e.target as HTMLElement).closest('#user-dropdown')) {
@@ -39,77 +46,155 @@ export default function Header() {
       }`}
     >
       <div className="flex items-center gap-3 md:gap-4">
-        <img
-          src={scrolled ? '/logos/foody_logo_r.svg' : '/logos/foody_logo.svg'}
-          alt="Foody Logo"
-          className="h-8 w-8 md:h-10 md:w-10 transition-all duration-300"
-        />
-        <span
-          className={`font-extrabold font-sans tracking-tight text-[clamp(1.5rem,4vw,2.5rem)] transition-colors duration-300 ${
-            scrolled ? 'text-gray-900' : 'text-white'
-          }`}
+        <button
+          type="button"
+          onClick={() => {
+            if (solid) navigate('/');
+          }}
+          className="flex items-center gap-3 md:gap-4 focus:outline-none bg-transparent border-none p-0 m-0"
+          style={{ cursor: solid ? 'pointer' : 'default' }}
+          tabIndex={0}
+          aria-label="Back to Home"
         >
-          Foody
-        </span>
+          <img
+            src={scrolled ? '/logos/foody_logo_r.svg' : '/logos/foody_logo.svg'}
+            alt="Foody Logo"
+            className="h-8 w-8 md:h-10 md:w-10 transition-all duration-300"
+          />
+          <span
+            className={`font-extrabold font-sans tracking-tight text-[clamp(1.5rem,4vw,2.5rem)] transition-colors duration-300 ${
+              scrolled ? 'text-gray-900' : 'text-white'
+            }`}
+          >
+            Foody
+          </span>
+        </button>
       </div>
       <div className="flex items-center gap-2 md:gap-4">
         {isLoggedIn && user ? (
           <>
             {/* Cart */}
             <button
-              className="relative p-2 rounded-full bg-transparent hover:bg-gray-100 transition"
+              className={`relative p-2 rounded-full bg-transparent transition
+        ${scrolled ? 'hover:bg-gray-300' : 'hover:bg-gray-800'}`}
               aria-label="Cart"
               onClick={() => navigate('/cart')}
             >
-              <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
-                <path d="M6 6h15l-1.5 9h-13z" stroke="#222" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <circle cx="9" cy="20" r="1" fill="#222"/>
-                <circle cx="18" cy="20" r="1" fill="#222"/>
-              </svg>
+              <img
+                src={scrolled ? '/icons/cart.svg' : '/icons/cart_w.svg'}
+                alt="Cart"
+                width={32}
+                height={32}
+                className="w-8 h-8 object-contain"
+              />
             </button>
-            {/* User */}
-            <div className="relative" id="user-dropdown">
-              <button
-                className="flex items-center gap-2 focus:outline-none"
-                onClick={() => setDropdownOpen((v) => !v)}
+            {/* User Avatar */}
+            {/* Mobile: Avatar only, no name */}
+            <button
+              className="flex md:hidden items-center gap-0 focus:outline-none"
+              onClick={() => setDropdownOpen((open) => !open)}
+              aria-label="Profile"
+              id="user-dropdown"
+            >
+              <img
+                src={getAvatar(user || undefined)}
+                alt={user?.name || 'User'}
+                className="w-12 h-12 rounded-full object-cover"
+              />
+            </button>
+            {/* Dropdown menu for mobile */}
+            {dropdownOpen && (
+              <div
+                className="absolute top-[calc(100%)] right-4 left-auto bg-white rounded-2xl shadow-xl border border-gray-100 py-4 z-30 flex flex-col"
+                style={{
+                  minWidth: 0,
+                  width: 'auto',
+                  maxWidth: '90vw',
+                  paddingLeft: 0,
+                  paddingRight: 0,
+                }}
+                id="user-dropdown"
               >
-                <img
-                  src={user.avatar}
-                  alt={user.name}
-                  className="w-8 h-8 rounded-full object-cover border-2 border-primary"
-                />
-                <span
-                  className={`font-semibold text-base transition-colors duration-300 ${
-                    scrolled ? 'text-gray-900' : 'text-white'
-                  }`}
-                >
-                  {user.name}
-                </span>
-              </button>
-              {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-30">
-                  <button
-                    className="w-full text-left px-4 py-2 hover:bg-gray-50 text-gray-800"
-                    onClick={() => {
-                      setDropdownOpen(false);
-                      navigate('/orders');
-                    }}
-                  >
-                    My Orders
-                  </button>
-                  <button
-                    className="w-full text-left px-4 py-2 hover:bg-gray-50 text-gray-800"
-                    onClick={() => {
-                      dispatch(logout());
-                      setDropdownOpen(false);
-                      navigate('/login');
-                    }}
-                  >
-                    Logout
-                  </button>
+                {/* Profile section */}
+                <div className="flex items-center gap-3 px-5 pb-3 border-b border-gray-200 mb-2 min-w-[220px]">
+                  <img
+                    src={getAvatar(user || undefined)}
+                    alt={user?.name || 'User'}
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div className="font-bold text-lg text-gray-900 break-all">{user?.name}</div>
                 </div>
-              )}
-            </div>
+                {/* Menu items */}
+                <button
+                  className="w-full text-left px-5 py-3 hover:bg-gray-50 text-gray-900 flex items-center gap-3 transition"
+                  onClick={() => {
+                    setDropdownOpen(false);
+                    navigate('/address');
+                  }}
+                >
+                  <img
+                    src="/icons/delivery_address.svg"
+                    alt="Delivery Address"
+                    width={22}
+                    height={22}
+                    className="inline-block"
+                  />
+                  <span className="text-base">Delivery Address</span>
+                </button>
+                <button
+                  className="w-full text-left px-5 py-3 hover:bg-gray-50 text-gray-900 flex items-center gap-3 transition"
+                  onClick={() => {
+                    setDropdownOpen(false);
+                    navigate('/orders');
+                  }}
+                >
+                  <img
+                    src="/icons/my_orders.svg"
+                    alt="My Orders"
+                    width={22}
+                    height={22}
+                    className="inline-block"
+                  />
+                  <span className="text-base">My Orders</span>
+                </button>
+                <button
+                  className="w-full text-left px-5 py-3 hover:bg-gray-50 text-red-600 flex items-center gap-3 transition"
+                  onClick={() => {
+                    dispatch(logout());
+                    setDropdownOpen(false);
+                    navigate('/login');
+                  }}
+                >
+                  <img
+                    src="/icons/logout.svg"
+                    alt="Logout"
+                    width={22}
+                    height={22}
+                    className="inline-block"
+                  />
+                  <span className="text-base">Logout</span>
+                </button>
+              </div>
+            )}
+            {/* Desktop: Avatar + name */}
+            <button
+              className="hidden md:flex items-center gap-2 focus:outline-none"
+              onClick={() => navigate('/profile')}
+              aria-label="Profile"
+            >
+              <img
+                src={getAvatar(user || undefined)}
+                alt={user?.name || 'User'}
+                className="w-12 h-12 rounded-full object-cover"
+              />
+              <span
+                className={`font-semibold text-base transition-colors duration-300 ${
+                  scrolled ? 'text-gray-900' : 'text-white'
+                }`}
+              >
+                {user.name}
+              </span>
+            </button>
           </>
         ) : (
           <>

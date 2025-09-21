@@ -17,7 +17,6 @@ export default function CheckoutPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate order submit (replace with API call if needed)
     setSubmitted(true);
     dispatch(clearCart());
   };

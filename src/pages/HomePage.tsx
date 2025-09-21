@@ -4,6 +4,7 @@ import type { Restaurant } from '../types';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../features/store';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 export default function HomePage() {
   const { isLoggedIn } = useSelector((state: RootState) => state.user);
@@ -13,15 +14,14 @@ export default function HomePage() {
   return (
     <div className="relative min-w-0 w-full flex flex-col items-center justify-start overflow-y-auto">
       <Header />
-      {/* Hero Section */}
       <div
-        className="flex flex-col items-center justify-center w-full relative min-h-[clamp(500px,80vw,827px)] bg-cover bg-no-repeat bg-top"
+        className="flex flex-col items-center justify-center w-full relative min-h-[clamp(500px,80vw,827px)] bg-cover bg-no-repeat bg-top px-0 sm:px-0"
         style={{
           backgroundImage: "url('/images/burger_hero.svg')",
         }}
       >
         {/* Overlay SVG only */}
-        <div className="flex flex-col items-center justify-center w-auto relative z-20">
+        <div className="flex flex-col items-center justify-center w-full relative z-20 px-[22px] sm:px-0">
           <h1 className="text-white text-center font-extrabold font-sans tracking-tight text-[clamp(2rem,5vw,3rem)] leading-[clamp(2.2rem,6vw,3.3rem)] drop-shadow-lg">
             Explore Culinary Experiences
           </h1>
@@ -29,7 +29,7 @@ export default function HomePage() {
             Search and refine your choice to discover the perfect restaurant.
           </p>
           {/* Search Bar */}
-          <div className="w-full max-w-[500px] flex items-center bg-white rounded-[2rem] shadow-lg px-[clamp(1.5rem,3vw,2rem)] py-[clamp(0.5rem,2vw,1rem)]">
+          <div className="w-full max-w-[500px] flex items-center bg-white rounded-[2rem] shadow-lg px-[clamp(1.5rem,3vw,2rem)] py-[clamp(0.5rem,2vw,1rem)] mt-0">
             <svg
               className="w-5 h-5 text-gray-500"
               fill="none"
@@ -43,7 +43,7 @@ export default function HomePage() {
             <input
               type="text"
               placeholder="Search restaurants, food and drink"
-              className="w-full bg-transparent outline-none border-none ring-0 text-gray-900 text-[clamp(0.9rem,1vw,1rem)] font-normal px-1"
+              className="w-full bg-transparent outline-none border-none ring-0 text-gray-900 text-[clamp(0.9rem,1vw,1rem)] font-normal px-1.5"
             />
           </div>
         </div>
@@ -151,89 +151,7 @@ export default function HomePage() {
           </button>
         </div>
       </div>
-      {/* Footer Section */}
-      <footer className="w-full bg-[#181818] text-white pt-[clamp(2rem,5vw,3rem)] pb-[clamp(1.5rem,4vw,2.5rem)] px-[clamp(1rem,8vw,120px)] mt-auto">
-        <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-start gap-y-[clamp(2rem,5vw,3rem)] gap-x-[clamp(2rem,12vw,210px)]">
-          {/* Kiri: Logo & Deskripsi */}
-          <div className="flex-1 min-w-[220px] mb-8 md:mb-0">
-            <div className="flex items-center gap-2 mb-2">
-              <img src="/logos/foody_logo_r.svg" alt="Foody Logo" className="h-7 w-7" />
-              <span className="font-bold text-[clamp(1.1rem,2vw,1.3rem)]">Foody</span>
-            </div>
-            <p className="text-[clamp(0.9rem,1.2vw,1rem)] text-gray-300 mb-4 max-w-[380px]">
-              Enjoy homemade flavors & chef’s signature dishes, freshly prepared every day. Order
-              online or visit our nearest branch.
-            </p>
-            <div className="font-semibold mb-2 text-[clamp(0.95rem,1vw,1.05rem)]">
-              Follow on Social Media
-            </div>
-            <div className="flex gap-3">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook"
-                className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-800 text-white hover:text-white hover:bg-primary hover:border-primary transition-colors duration-300"
-              >
-                <i className="fab fa-facebook-f text-lg"></i>
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-800 text-white hover:text-white hover:bg-primary hover:border-primary transition-colors duration-300"
-              >
-                <i className="fab fa-instagram text-lg"></i>
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-800 text-white hover:text-white hover:bg-primary hover:border-primary transition-colors duration-300"
-              >
-                <i className="fab fa-linkedin-in text-lg"></i>
-              </a>
-              <a
-                href="https://tiktok.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="TikTok"
-                className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-800 text-white hover:text-white hover:bg-primary hover:border-primary transition-colors duration-300"
-              >
-                <i className="fab fa-tiktok text-lg"></i>
-              </a>
-            </div>
-          </div>
-          {/* Tengah: Explore */}
-          <div className="flex-1 min-w-[120px] mb-8 md:mb-0">
-            <h4 className="font-semibold mb-2 text-[clamp(1rem,1.5vw,1.1rem)]">Explore</h4>
-            <ul className="space-y-1 text-gray-300 text-[clamp(0.9rem,1vw,1rem)]">
-              <li>All Food</li>
-              <li>Nearby</li>
-              <li>Discount</li>
-              <li>Best Seller</li>
-              <li>Delivery</li>
-              <li>Lunch</li>
-            </ul>
-          </div>
-          {/* Kanan: Help */}
-          <div className="w-[clamp(160px,18vw,200px)] flex-shrink-0">
-            <h4 className="font-semibold mb-2 text-[clamp(1rem,1.5vw,1.1rem)]">Help</h4>
-            <ul className="space-y-1 text-gray-300 text-[clamp(0.9rem,1vw,1rem)]">
-              <li>How to Order</li>
-              <li>Payment Methods</li>
-              <li>Track My Order</li>
-              <li>FAQ</li>
-              <li>Contact Us</li>
-            </ul>
-          </div>
-        </div>
-        <div className="text-center text-gray-500 text-xs mt-8">
-          &copy; {new Date().getFullYear()} Foody. All rights reserved.
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -46,15 +46,15 @@ export default function LoginPage() {
     try {
       const res = await axios.post('/api/auth/login', { email, password });
       const token = res.data?.data?.token;
-      const userData = res.data?.data?.user; // pastikan backend mengirim data user
+      const userData = res.data?.data?.user; 
       if (token) {
         localStorage.setItem('token', token);
-        // Dispatch ke Redux userSlice
         dispatch(
           login({
             name: userData?.name || 'User',
             avatar: userData?.avatar || '/images/user_avatar.png',
-            email: userData?.email || email,
+            email: userData?.email,
+            phone: userData?.phone || '',
           })
         );
         navigate('/');

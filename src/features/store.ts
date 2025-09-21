@@ -3,6 +3,7 @@ import cartReducer from './cart/cartSlice';
 import filtersReducer from './filters/filtersSlice';
 import userReducer from './user/userSlice';
 
+
 const store = configureStore({
   reducer: {
     cart: cartReducer,
