@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../features/store';
 import { logout } from '../features/user/userSlice';
 import { getAvatar } from '../utils/getAvatar';
+import { Button } from "@/components/ui/button";
 
 type HeaderProps = {
   solid?: boolean;
@@ -26,7 +27,6 @@ export default function Header({ solid = false }: HeaderProps) {
     return () => window.removeEventListener('scroll', onScroll);
   }, [solid]);
 
-  // Close dropdown on click outside (mobile only)
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (!(e.target as HTMLElement).closest('#user-dropdown')) {
@@ -198,28 +198,30 @@ export default function Header({ solid = false }: HeaderProps) {
           </>
         ) : (
           <>
-            <button
-              className={`rounded-full px-4 md:px-8 py-2 font-semibold text-base md:text-[1rem] transition-all duration-300 border-2 ${
-                scrolled
+            <Button
+              variant="outline"
+              className={`rounded-full px-4 md:px-8 py-2 font-semibold text-base md:text-[1rem] transition-all duration-300 border-2 shadow-none
+                ${scrolled
                   ? 'border-gray-900 text-gray-900 bg-transparent hover:bg-gray-100'
                   : 'border-[#E9EAEB] text-white bg-transparent hover:bg-white/10'
-              } shadow-none`}
+                }`}
               style={{ height: 'clamp(40px,6vw,48px)', minWidth: 'clamp(100px,12vw,160px)' }}
               onClick={() => navigate('/login')}
             >
               Sign In
-            </button>
-            <button
-              className={`rounded-full px-4 md:px-8 py-2 font-semibold text-base md:text-[1rem] transition-all duration-300 border-2 ${
-                scrolled
+            </Button>
+            <Button
+              variant="default"
+              className={`rounded-full px-4 md:px-8 py-2 font-semibold text-base md:text-[1rem] transition-all duration-300 border-2 shadow-none
+                ${scrolled
                   ? 'border-primary bg-primary text-white hover:bg-red-700'
                   : 'border-white bg-white text-[#181818] hover:bg-gray-100'
-              } shadow-none`}
+                }`}
               style={{ height: 'clamp(40px,6vw,48px)', minWidth: 'clamp(100px,12vw,160px)' }}
               onClick={() => navigate('/register')}
             >
               Sign Up
-            </button>
+            </Button>
           </>
         )}
       </div>

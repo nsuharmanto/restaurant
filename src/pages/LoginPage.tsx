@@ -4,6 +4,7 @@ import { Checkbox } from '../components/ui/checkbox';
 import axios from '../services/api/axios';
 import { useDispatch } from 'react-redux';
 import { login } from '../features/user/userSlice';
+import { Button } from '../components/ui/button';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -46,7 +47,7 @@ export default function LoginPage() {
     try {
       const res = await axios.post('/api/auth/login', { email, password });
       const token = res.data?.data?.token;
-      const userData = res.data?.data?.user; 
+      const userData = res.data?.data?.user;
       if (token) {
         localStorage.setItem('token', token);
         dispatch(
@@ -97,8 +98,9 @@ export default function LoginPage() {
             </div>
             <form className="w-full flex flex-col" onSubmit={handleLogin}>
               <div className="flex w-full h-14 rounded-2xl gap-2 overflow-hidden bg-gray-100 shadow">
-                <button
+                <Button
                   type="button"
+                  variant="ghost"
                   className={`flex-1 flex items-center justify-center h-10 mt-2 ml-2 rounded-xl border-none font-medium text-base ${
                     activeTab === 'signin'
                       ? 'bg-white text-gray-950 font-bold cursor-default pointer-events-none shadow'
@@ -108,9 +110,10 @@ export default function LoginPage() {
                   tabIndex={activeTab === 'signin' ? -1 : 0}
                 >
                   Sign in
-                </button>
-                <button
+                </Button>
+                <Button
                   type="button"
+                  variant="ghost"
                   className={`flex-1 flex items-center justify-center h-10 mt-2 mr-2 rounded-xl border-none font-medium text-base ${
                     activeTab === 'signup'
                       ? 'bg-white text-gray-950 font-bold cursor-default pointer-events-none shadow'
@@ -120,7 +123,7 @@ export default function LoginPage() {
                   tabIndex={activeTab === 'signup' ? -1 : 0}
                 >
                   Sign up
-                </button>
+                </Button>
               </div>
               {/* Email Input */}
               <div className="relative w-full mt-6">
@@ -133,14 +136,10 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
-                    if (e.target.value === '') {
-                      setEmailError(null);
-                      if (authError) setAuthError(null);
-                    }
                   }}
                   onBlur={() => {
                     if (!email) {
-                      setEmailError(null);
+                      setEmailError('Email is required');
                     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                       setEmailError('Please enter a valid email address');
                     } else {
@@ -166,14 +165,10 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
-                    if (e.target.value === '') {
-                      setPasswordError(null);
-                      if (authError) setAuthError(null);
-                    }
                   }}
                   onBlur={() => {
                     if (!password) {
-                      setPasswordError(null);
+                      setPasswordError('Password is required');
                     } else if (password.length < 6) {
                       setPasswordError('Password must be at least 6 characters');
                     } else {
@@ -248,12 +243,12 @@ export default function LoginPage() {
                   Remember Me
                 </label>
               </div>
-              <button
+              <Button
                 type="submit"
                 className="w-full h-12 rounded-full bg-primary text-white font-bold text-base mt-2 shadow hover:bg-red-700 transition border-none"
               >
                 Login
-              </button>
+              </Button>
               {authError && (
                 <div className="w-full text-center text-primary text-sm font-semibold mt-2">
                   {authError}

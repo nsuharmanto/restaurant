@@ -14,13 +14,16 @@ export default function HomePage() {
   return (
     <div className="relative min-w-0 w-full flex flex-col items-center justify-start overflow-y-auto">
       <Header />
+      {/* Image Background + Overlay SVG */}
       <div
         className="flex flex-col items-center justify-center w-full relative min-h-[clamp(500px,80vw,827px)] bg-cover bg-no-repeat bg-top px-0 sm:px-0"
         style={{
-          backgroundImage: "url('/images/burger_hero.svg')",
+          backgroundImage: "url('/images/burger_hero_r.svg')",
+          backgroundPosition: 'top',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
         }}
       >
-        {/* Overlay SVG only */}
         <div className="flex flex-col items-center justify-center w-full relative z-20 px-[22px] sm:px-0">
           <h1 className="text-white text-center font-extrabold font-sans tracking-tight text-[clamp(2rem,5vw,3rem)] leading-[clamp(2.2rem,6vw,3.3rem)] drop-shadow-lg">
             Explore Culinary Experiences
@@ -43,15 +46,10 @@ export default function HomePage() {
             <input
               type="text"
               placeholder="Search restaurants, food and drink"
-              className="w-full bg-transparent outline-none border-none ring-0 text-gray-900 text-[clamp(0.9rem,1vw,1rem)] font-normal px-1.5"
+              className="w-full bg-transparent outline-none border-none ring-0 text-gray-900 text-[clamp(0.9rem,1vw,1rem)] font-normal px-1.5 placeholder-gray-600"
             />
           </div>
         </div>
-        <img
-          src="/images/overlay.svg"
-          alt="Overlay"
-          className="absolute inset-0 z-10 w-full h-full object-cover pointer-events-none rounded-none"
-        />
       </div>
       {/* Category Icons Section */}
       <div className="w-full bg-white z-30 pt-[clamp(2rem,5vw,3rem)] px-[clamp(1rem,8vw,120px)]">
@@ -82,7 +80,7 @@ export default function HomePage() {
           ))}
         </div>
       </div>
-      {/* Recommended Section - Selalu tampil */}
+      {/* Recommended Section */}
       <div className="w-full px-[clamp(1rem,8vw,120px)] py-[clamp(2rem,5vw,3rem)]">
         <div className="flex flex-col sm:flex-row items-center justify-between mb-[clamp(1rem,2vw,1.5rem)] gap-2">
           <h2 className="font-bold text-[clamp(1.2rem,3vw,1.7rem)] text-gray-900">Recommended</h2>

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { UserInfo } from './userTypes'; // gunakan tipe UserInfo dari userTypes.ts
+import type { UserInfo } from './userTypes'; 
 
 type UserState = {
   isLoggedIn: boolean;

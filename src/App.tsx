@@ -5,10 +5,13 @@ import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage.tsx';
 import AddressPage from './pages/AddressPage.tsx';
 import OrdersPage from './pages/OrdersPage';
+import { Toaster } from "@/components/ui/toaster";
 
 function App() {
   return (
     <BrowserRouter>
+      {/* Toaster di luar Routes */}
+      <Toaster />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -16,7 +19,6 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/address" element={<AddressPage />} />
         <Route path="/orders" element={<OrdersPage />} />
-
         {/* Tambahkan route lain sesuai kebutuhan */}
       </Routes>
     </BrowserRouter>

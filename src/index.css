@@ -42,3 +42,7 @@ input[type="password"]::-webkit-input-suffix {
 input[type="password"]::-webkit-input-password-toggle-button {
   display: none !important;
 }
+
+/* [data-radix-toast-description] {
+  font-size: 2.25rem !important;
+} */
