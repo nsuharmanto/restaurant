@@ -18,7 +18,7 @@ export default function HomePage() {
       <div
         className="flex flex-col items-center justify-center w-full relative min-h-[clamp(500px,80vw,827px)] bg-cover bg-no-repeat bg-top px-0 sm:px-0"
         style={{
-          backgroundImage: "url('/images/burger_hero_r.svg')",
+          backgroundImage: "url('/images/burger_hero.svg')",
           backgroundPosition: 'top',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
